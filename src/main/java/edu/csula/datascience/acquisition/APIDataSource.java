@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.csula.datascience.model.Configuration;
+//import edu.csula.datascience.model.Configuration;
 import edu.csula.datascience.model.Crime;
 import edu.csula.datascience.model.CrimeJSON;
 
