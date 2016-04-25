@@ -21,6 +21,7 @@ public class APIDataSource implements Source<CrimeJSON> {
 	 private BufferedReader br=null; 
 	  private ObjectMapper mapper=new ObjectMapper();
 	  List<CrimeJSON> listJson=new ArrayList<CrimeJSON>();
+	  String https_url="";
 	  
 	  public APIDataSource(){}
 	  
@@ -62,7 +63,7 @@ public class APIDataSource implements Source<CrimeJSON> {
 		  for(int year=2001;year<2017;year++){
 		 try {
 
-			  String https_url = Configuration.url+"?$$app_token="+Configuration.appToken+"&$limit=10000000&year="+year;
+//			   https_url = Configuration.url+"?$$app_token="+Configuration.appToken+"&$limit=10000000&year="+year;
 			  URL  url = new URL(https_url);
 			  System.setProperty("https.protocols", "TLSv1.1");
 			  HttpsURLConnection con = (HttpsURLConnection)url.openConnection();

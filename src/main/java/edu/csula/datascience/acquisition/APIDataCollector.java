@@ -13,7 +13,7 @@ import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
-import edu.csula.datascience.model.Configuration;
+//import edu.csula.datascience.model.Configuration;
 import edu.csula.datascience.model.Crime;
 import edu.csula.datascience.model.CrimeJSON;
 
@@ -60,8 +60,8 @@ public class APIDataCollector  implements Collector<Crime, CrimeJSON> {
 	 
 	try{
 		mongoClient = new MongoClient("localhost", 27017);
-		mongoDbName=Configuration.mongodatabase;
-		mongoCollection=Configuration.mongocollection;
+		mongoDbName="BigData";//Configuration.mongodatabase;
+		mongoCollection="Crime";//Configuration.mongocollection;
 		dbCollection= this.getCollection(mongoDbName, mongoCollection) ;
 		dbCollection.setWriteConcern(WriteConcern.UNACKNOWLEDGED);
 	 
