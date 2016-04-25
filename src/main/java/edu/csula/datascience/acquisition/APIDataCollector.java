@@ -31,7 +31,20 @@ public class APIDataCollector  implements Collector<Crime, CrimeJSON> {
     
 	@Override
 	public Collection<Crime> mungee(Collection<CrimeJSON> src) {
-	return null;
+		return src.stream()
+	            .filter(data -> data.getCase_number() != null)
+	            .filter(data -> data.getId() != null)
+	            .filter(data -> data.getYear() != null)
+	            .filter(data -> data.getDate() != null)
+	            .filter(data -> data.getDescription() != null)
+	            .filter(data -> data.getDistrict() != null)
+	            .filter(data -> data.getDomestic() != null)
+	            .filter(data -> data.getFbi_code() != null)
+	            .filter(data -> data.getLocation_description() != null)
+	            .filter(data -> data.getPrimary_type() != null)
+	            .filter(data -> data.getUpdated_on() != null)
+	            .map(Crime::buildCrimeEntity)
+	            .collect(Collectors.toList());
 	}
 
 	@Override

@@ -53,5 +53,73 @@ public class APIDataSource implements Source<CrimeJSON> {
 		 return listJson;
 	}
 	
-}
+	
+	public void getDataFromAPI()
+	{
+		  int exceptionct=0;
+		  APIDataCollector dataCollector=new APIDataCollector();
+		 
+		  for(int year=2001;year<2017;year++){
+		 try {
 
+			  String https_url = Configuration.url+"?$$app_token="+Configuration.appToken+"&$limit=10000000&year="+year;
+			  URL  url = new URL(https_url);
+			  System.setProperty("https.protocols", "TLSv1.1");
+			  HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
+			   br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			
+			  while ((input = br.readLine()) != null)
+			  {
+
+				  listJson=(List<CrimeJSON>) this.next();
+			    
+			      if(ct%300==0)
+			      {
+			    	  try{
+			    		
+			    		  dataCollector.save((List<Crime>) dataCollector.mungee(listJson));
+			    		  listJson=new ArrayList<CrimeJSON>();
+					      }catch(Exception e)
+					      {
+					    	  System.out.println("db-->"+e.getMessage());
+					    	  e.printStackTrace();
+					      }
+					      finally{listJson= new ArrayList<CrimeJSON>();}
+			      }
+				  System.out.println(ct); 
+			   }
+
+//			  System.out.println(ct);
+			   System.out.println("Exception ct--> "+exceptionct);
+			   System.out.println("-------------"+year+"--- End-----------------------");
+			  
+				
+	      } 
+	      catch(Exception e)
+	      {
+	    	  System.err.println(input);
+	    	 e.printStackTrace();
+	      }finally
+	      {
+				try {
+						if(br!=null)
+						br.close();
+						 if(listJson.size()!=0)
+						 {
+							 dataCollector.save((List<Crime>) dataCollector.mungee(listJson));
+//				    		  mongoDAL.insertIntoCollection((List<Crime>) dataCollector.mungee(listJson));
+				    		  listJson=new ArrayList<CrimeJSON>();
+						 }
+					} catch (Exception e) 
+					{
+						System.out.println(e.getMessage());
+					}
+				 	finally{listJson= new ArrayList<CrimeJSON>();}
+	      }
+		  }
+		
+		
+		
+	}
+
+}
