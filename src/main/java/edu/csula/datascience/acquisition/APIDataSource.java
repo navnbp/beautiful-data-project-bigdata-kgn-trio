@@ -74,7 +74,7 @@ public class APIDataSource implements Source<CrimeJSON> {
 
 				  listJson=(List<CrimeJSON>) this.next();
 			    
-			      if(ct%300==0)
+			      if(ct%50000==0)
 			      {
 			    	  try{
 			    		

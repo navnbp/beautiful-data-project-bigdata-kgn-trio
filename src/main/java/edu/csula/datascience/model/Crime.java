@@ -1,5 +1,7 @@
 package edu.csula.datascience.model;
 
+
+
 public class Crime    {
 	
 	public int arrest=0;
@@ -14,31 +16,16 @@ public class Crime    {
 	public String primaryType;
 	public String updatedOn;
 	public int year=0;
+	public String block;
+	public String location;
+	public String ward;
+	public String community_area;
 	
 	public Crime(){}
 	
-	/* public static Crime build(Crime c)
-	{
-		Crime crime=new Crime();
-		crime.arrest = c.arrest;
-		crime.caseNumber = c.caseNumber;
-		crime.date = c.date;
-		crime.description = c.description;
-		crime.district = c.district;
-		crime.domestic = c.domestic;
-		crime.fbiCode = c.fbiCode;
-		crime.id = c.id;
-		crime.locationDescription = c.locationDescription;
-		crime.primaryType = c.primaryType;
-		crime.updatedOn = c.updatedOn;
-		crime.year = c.year;
-		return crime;
-	}*/
-	
-	
 	
 	public Crime(int arrest, String caseNumber, String date, String description, String district, int domestic,
-			String fbiCode, int id, String locationDescription, String primaryType, String updatedOn, int year) {
+			String fbiCode, int id, String locationDescription, String primaryType, String updatedOn, int year,String location,String ward,String community_area) {
 		super();
 		this.arrest = arrest;
 		this.caseNumber = caseNumber;
@@ -52,6 +39,9 @@ public class Crime    {
 		this.primaryType = primaryType;
 		this.updatedOn = updatedOn;
 		this.year = year;
+		this.location=location;
+		this.ward=ward;
+		this.community_area=community_area;
 	}
 
 
@@ -129,39 +119,44 @@ public class Crime    {
 	public void setYear(int year) {
 		this.year = year;
 	}
-	
-	
-	/*public static int nullValueCt=0;
-	
-	public static int getNullValueCt() {
-		return nullValueCt;
+	public String getBlock() {
+		return block;
 	}
 
-	public static void setNullValueCt(int nullValueCt) {
-		Crime.nullValueCt = nullValueCt;
-	}*/
-	
-	/* public static Crime build(MockCrime data) {
-		
-		 Crime crime=new Crime();
-			
-			crime.setArrest(data.getArrest());
-			crime.setCaseNumber(data.getCaseNumber());
-			crime.setDate(data.getDate());
-			crime.setDistrict(data.getDistrict());
-			crime.setDescription(data.getLocationDescription());
-			crime.setDomestic(data.getDomestic().equals("true")?1:0);
-			crime.setFbiCode(data.getFbiCode());
-			crime.setId(data.getId());
-			crime.setLocationDescription(data.getLocationDescription());
-			crime.setPrimaryType(data.getPrimaryType());
-			crime.setUpdatedOn(data.getUpdatedOn());
-			crime.setYear(data.getYear());
-			return crime;
-		 
-	    }*/
+	public void setBlock(String block) {
+		this.block = block;
+	}
 
-	 public static Crime buildCrimeEntity(CrimeJSON json)
+	
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+		
+	public String getWard() {
+		return ward;
+	}
+
+
+	public void setWard(String ward) {
+		this.ward = ward;
+	}
+
+
+	public String getCommunity_area() {
+		return community_area;
+	}
+
+
+	public void setCommunity_area(String community_area) {
+		this.community_area = community_area;
+	}
+
+
+	public static Crime buildCrimeEntity(CrimeJSON json)
 		{
 			Crime crime=new Crime();
 			
@@ -177,10 +172,14 @@ public class Crime    {
 			crime.setPrimaryType(json.getPrimary_type());
 			crime.setUpdatedOn(json.getUpdated_on().substring(0, 10));
 			crime.setYear(Integer.parseInt(json.getYear()));
+			crime.setBlock(json.getBlock());
+			crime.setLocation(json.getLatitude()+","+json.getLongitude());
+			crime.setCommunity_area(json.getCommunity_area());
+			crime.setWard(json.getWard());
+			
 			return crime;
 		}
 
-	 
 	public Crime convertToCrimeEntity(CrimeJSON json)
 	{
 		if(json.getArrest()==null || json.getCase_number()==null||
@@ -188,7 +187,8 @@ public class Crime    {
 			json.getDescription()==null|| json.getDomestic()==null ||
 			json.getFbi_code()==null|| json.getId()==null ||
 			json.getLocation_description()==null|| json.getPrimary_type()==null ||
-			json.getUpdated_on()==null|| json.getYear()==null )
+			json.getUpdated_on()==null|| json.getYear()==null  || json.getBlock()==null
+			|| json.getLatitude()==null	||	json.getLongitude()==null  || json.getWard()==null || json.getCommunity_area()==null )
 		{
 			/*System.out.println("Null Value -->"+nullValueCt);
 			nullValueCt++;*/
@@ -209,6 +209,10 @@ public class Crime    {
 		crime.setPrimaryType(json.getPrimary_type());
 		crime.setUpdatedOn(json.getUpdated_on().substring(0, 10));
 		crime.setYear(Integer.parseInt(json.getYear()));
+		crime.setBlock(json.getBlock());
+		crime.setLocation(json.getLongitude()+","+json.getLatitude());
+		crime.setCommunity_area(json.getCommunity_area());
+		crime.setWard(json.getWard());
 		return crime;
 	}
 	
